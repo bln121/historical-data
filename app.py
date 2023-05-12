@@ -23,12 +23,6 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 
-
-
-import base64
-from IPython.display import HTML
-from google.colab import drive
-
 #code 1
 
 
@@ -293,51 +287,45 @@ for i in range(0,5):
 
 for i in range(0,6):
   if(abs(actual_data.at[i,'Close']-actual_data.at[i,'Open'])<=3 ):
-    img_path='/content/drive/MyDrive/arrows/flat.png'
+    img_path='flat'
     flag1=0
   elif(actual_data.at[i,'Close']-actual_data.at[i,'Open']>=3):
-    img_path = '/content/drive/MyDrive/arrows/up arrow.png'
+    img_path = 'up'
     flag1=1
   elif(actual_data.at[i,'Open']-actual_data.at[i,'Close']>=3):
-    img_path='/content/drive/MyDrive/arrows/down arrow.png'
+    img_path='down'
     flag1=-1
-  with open(img_path, 'rb') as f:
-    img_bytes = f.read()
-  img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  
 
 # Add the image data to the DataFrame
-  actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'actual_direction'] = img_path
   
-  if(abs(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open'])<=2):
-    img_path='/content/drive/MyDrive/arrows/flat.png'
+  if(abs(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open'])<=3):
+    img_path='flat'
     flag2=0
-  elif(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open']>=2):
-    img_path = '/content/drive/MyDrive/arrows/up arrow.png'
+  elif(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open']>=3):
+    img_path = 'up'
     flag2=1
-  elif(actual_data.at[i,'prediction_open']-actual_data.at[i,'prediction_close']>=2):
-    img_path='/content/drive/MyDrive/arrows/down arrow.png'
+  elif(actual_data.at[i,'prediction_open']-actual_data.at[i,'prediction_close']>=3):
+    img_path='down'
     flag2=-1
   
-  with open(img_path, 'rb') as f:
-    img_bytes = f.read()
-  img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  
 
 # Add the image data to the DataFrame
-  actual_data.at[i,'prediction_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'prediction_direction'] = img_path
 
 #code to insert correct or wrong symbol
 
   if(flag1==flag2):
-    img_path='/content/drive/MyDrive/arrows/correct.png'
+    img_path='correct'
   else:
-    img_path='/content/drive/MyDrive/arrows/Wrong.png'
+    img_path='Wrong'
 
-  with open(img_path, 'rb') as f:
-    img_bytes = f.read()
-  img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  
 
 # Add the image data to the DataFrame
-  actual_data.at[i,'overall_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'overall_direction'] = img_path
 # add 1 to each index
 actual_data.index = actual_data.index + 1
 
@@ -373,9 +361,9 @@ date_str=future_data['Date'].iloc[0]
 tomorrow = datetime.strptime(date_str, '%Y-%m-%d').date() + timedelta(1)
 future_data['Date'].iloc[1] = tomorrow
 future_data.index = future_data.index + 1
-#st.write(future_data)
+
 
 
 st.subheader("Prediction of future data")
+st.write(future_data)
 
-st.write(HTML(future_data.to_html(escape=False)))
