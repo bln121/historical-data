@@ -255,8 +255,9 @@ for k in range(0,7):
 #Creating empty dataframe- actual_data
 
 actual_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
-
-actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
+data1=data.tail(6)
+actual_data=pd.merge(data1,actual_data,how='outer')
+#actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
 
 actual_data.at[0,"prediction_open"]=round(prediction_open6,2)
 actual_data.at[0,"prediction_close"]=round(prediction_close6,2)
