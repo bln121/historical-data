@@ -336,7 +336,7 @@ actual_data.index = actual_data.index + 1
  #to print historical data -- first 5 rows of actual_data assigned to five_rows
 st.subheader('Prediction of historical data')
 
-st.write(HTML(actual_data.head(5).to_html(escape=False)))
+st.write(actual_data.head(5))
 
 #prediction of future data
 
