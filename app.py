@@ -342,8 +342,9 @@ st.write(actual_data.head(5))
 
 
 future_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
-
-future_data = future_data.append(actual_data.tail(1),ignore_index=True)
+data2=actual_data.tail(1)
+future_data=pd.merge(data2,future_data,how='outer')
+#future_data = future_data.append(actual_data.tail(1),ignore_index=True)
 
 #Accuracy for future data
 future_data.at[0,"accuracy_open"]=100-abs((actual_data.at[6,"prediction_open"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100)
