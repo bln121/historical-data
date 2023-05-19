@@ -288,7 +288,7 @@ for i in range(0,5):
 
 for i in range(0,6):
   if(abs(actual_data.at[i,'Close']-actual_data.at[i,'Open'])<=3 ):
-    img_path='flat'
+    img_path= '<img src='img_chania.jpg' alt='Flowers in Chania>'
     flag1=0
   elif(actual_data.at[i,'Close']-actual_data.at[i,'Open']>=3):
     img_path = 'up'
