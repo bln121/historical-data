@@ -23,6 +23,12 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 
+
+
+import base64
+from IPython.display import HTML
+
+
 #code 1
 
 
@@ -255,6 +261,7 @@ for k in range(0,7):
 #Creating empty dataframe- actual_data
 
 actual_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
+
 data1=data.tail(6)
 actual_data=pd.merge(data1,actual_data,how='outer')
 #actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
@@ -288,45 +295,52 @@ for i in range(0,5):
 
 for i in range(0,6):
   if(abs(actual_data.at[i,'Close']-actual_data.at[i,'Open'])<=3 ):
-    img_path= "flat"
+    img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="50" height="40">'
     flag1=0
   elif(actual_data.at[i,'Close']-actual_data.at[i,'Open']>=3):
-    img_path = 'up'
+    img_path = '<img src="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-coloricon/21/11-512.png" alt="Up" width="50" height="40">'
     flag1=1
   elif(actual_data.at[i,'Open']-actual_data.at[i,'Close']>=3):
-    img_path='down'
+    img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="50" height="40">'
     flag1=-1
-  
-
+  #with open(img_path, 'rb') as f:
+   # img_bytes = f.read()
+  #img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  img_b64=img_path
 # Add the image data to the DataFrame
-  actual_data.at[i,'actual_direction'] = img_path
-  
+  #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
+  actual_data.at[i,'actual_direction'] = img_b64
   if(abs(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open'])<=3):
-    img_path='flat'
+    img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="50" height="40">'
     flag2=0
   elif(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open']>=3):
-    img_path = 'up'
+    img_path = '<img src="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-coloricon/21/11-512.png" alt="Up" width="50" height="40">'
     flag2=1
   elif(actual_data.at[i,'prediction_open']-actual_data.at[i,'prediction_close']>=3):
-    img_path='down'
+    img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="50" height="40">'
     flag2=-1
   
-  
-
+  #with open(img_path, 'rb') as f:
+  #  img_bytes = f.read()
+  #img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  img_b64=img_path
 # Add the image data to the DataFrame
-  actual_data.at[i,'prediction_direction'] = img_path
-
+  #actual_data.at[i,'prediction_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'prediction_direction'] = img_b64
 #code to insert correct or wrong symbol
 
   if(flag1==flag2):
-    img_path='correct'
+    img_path='<img src="https://tse3.mm.bing.net/th?id=OIP.oHwE7W6T_2kEtiaccChqAQHaHa&pid=Api&P=0&h=180 alt="Correct" width="50" height="40">'
   else:
-    img_path='Wrong'
+    img_path='<img src="https://tse1.mm.bing.net/th?id=OIP.-HP-9rZqrTaXhXP-QV-nTwHaGk&pid=Api&P=0&h=180 alt="Wrong" width="50" height="40">'
 
-  
-
+  #with open(img_path, 'rb') as f:
+#   img_bytes = f.read()
+# img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+  img_b64=img_path
 # Add the image data to the DataFrame
-  actual_data.at[i,'overall_direction'] = img_path
+  #actual_data.at[i,'overall_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'overall_direction'] = img_b64
 # add 1 to each index
 actual_data.index = actual_data.index + 1
 
@@ -336,14 +350,15 @@ actual_data.index = actual_data.index + 1
  #to print historical data -- first 5 rows of actual_data assigned to five_rows
 st.subheader('Prediction of historical data')
 
+st.write(HTML(actual_data.head(5).to_html(escape=False)))
 st.write(actual_data.head(5))
-
-#prediction of future data
 
 
 future_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
+
 data2=actual_data.tail(1)
 future_data=pd.merge(data2,future_data,how='outer')
+
 #future_data = future_data.append(actual_data.tail(1),ignore_index=True)
 
 #Accuracy for future data
@@ -363,9 +378,9 @@ date_str=future_data['Date'].iloc[0]
 tomorrow = datetime.strptime(date_str, '%Y-%m-%d').date() + timedelta(1)
 future_data['Date'].iloc[1] = tomorrow
 future_data.index = future_data.index + 1
-
+#st.write(future_data)
 
 
 st.subheader("Prediction of future data")
-st.write(future_data)
 
+st.write(HTML(future_data.to_html(escape=False)))
