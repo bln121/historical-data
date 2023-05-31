@@ -364,6 +364,24 @@ future_data.at[0,"accuracy_close"]=100-abs((actual_data.at[6,"prediction_close"]
 future_data.at[1,"prediction_open"]=round(prediction_open0,2)
 future_data.at[1,"prediction_close"]=round(prediction_close0,2)#Prediction tomorrow's value
 
+if(abs(future_data.at[1,"prediction_close"]-future_data.at[1,"prediction_open"])<=3 ):
+  img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
+    
+elif(future_data.at[1,"prediction_close"]-future_data.at[1,"prediction_open"]>=3):
+  img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
+    
+elif(future_data.at[1,"prediction_open"]-future_data.at[1,"prediction_close"]>=3):
+  img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
+    
+  
+  #img_b64 = base64.b64encode(img_bytes).decode('utf-8') 
+img_b64=img_path
+# Add the image data to the DataFrame
+  #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
+future_data.at[1,'prediction_direction'] = img_b64
+
+
+
 #Converting string format date into date  and below is the code to insert the date in future_data dataframe
 
 from datetime import datetime
