@@ -259,37 +259,37 @@ for k in range(0,7):
 #print(f"NextDay_Date: {NextDay_Date[0]}")
 
 #Creating empty dataframe- actual_data
-
-actual_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
+#pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
+actual_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
 actual_data=pd.merge(data1,actual_data,how='outer')
 #actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
 
-actual_data.at[0,"prediction_open"]=round(prediction_open6,2)
-actual_data.at[0,"prediction_close"]=round(prediction_close6,2)
+actual_data.at[0,"po"]=round(prediction_open6,2)
+actual_data.at[0,"pc"]=round(prediction_close6,2)
 
-actual_data.at[1,"prediction_open"]=round(prediction_open5,2)
-actual_data.at[1,"prediction_close"]=round(prediction_close5,2)
+actual_data.at[1,"po"]=round(prediction_open5,2)
+actual_data.at[1,"pc"]=round(prediction_close5,2)
 
-actual_data.at[2,"prediction_open"]=round(prediction_open4,2)
-actual_data.at[2,"prediction_close"]=round(prediction_close4,2)
+actual_data.at[2,"po"]=round(prediction_open4,2)
+actual_data.at[2,"pc"]=round(prediction_close4,2)
 
-actual_data.at[3,"prediction_open"]=round(prediction_open3,2)
-actual_data.at[3,"prediction_close"]=round(prediction_close3,2)
+actual_data.at[3,"po"]=round(prediction_open3,2)
+actual_data.at[3,"pc"]=round(prediction_close3,2)
 
-actual_data.at[4,"prediction_open"]=round(prediction_open2,2)
-actual_data.at[4,"prediction_close"]=round(prediction_close2,2)
+actual_data.at[4,"po"]=round(prediction_open2,2)
+actual_data.at[4,"pc"]=round(prediction_close2,2)
 
-actual_data.at[5,"prediction_open"]=round(prediction_open1,2)
-actual_data.at[5,"prediction_close"]=round(prediction_close1,2)
+actual_data.at[5,"po"]=round(prediction_open1,2)
+actual_data.at[5,"pc"]=round(prediction_close1,2)
 
 #to calculate accuracy for historical data
 for i in range(0,5):
-  actual_data.at[i,"accuracy_open"]=100-abs((actual_data.at[i,"prediction_open"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100)
+  actual_data.at[i,"ao"]=100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100)
 
 for i in range(0,5):
-  actual_data.at[i,"accuracy_close"]=100-abs((actual_data.at[i,"prediction_close"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100)
+  actual_data.at[i,"ac"]=100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100)
 
 #to insert actual_direction,prediction_direction,overall_direction
 
@@ -309,22 +309,22 @@ for i in range(0,6):
   img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
-  actual_data.at[i,'actual_direction'] = img_b64
-  if(abs(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open'])<=3):
+  actual_data.at[i,'ad'] = img_b64
+  if(abs(actual_data.at[i,'pc']-actual_data.at[i,'po'])<=3):
     img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     flag2=0
-  elif(actual_data.at[i,'prediction_close']-actual_data.at[i,'prediction_open']>=3):
+  elif(actual_data.at[i,'pc']-actual_data.at[i,'po']>=3):
     img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     flag2=1
-  elif(actual_data.at[i,'prediction_open']-actual_data.at[i,'prediction_close']>=3):
+  elif(actual_data.at[i,'po']-actual_data.at[i,'pc']>=3):
     img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     flag2=-1
   
 
   img_b64=img_path
 # Add the image data to the DataFrame
-  #actual_data.at[i,'prediction_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
-  actual_data.at[i,'prediction_direction'] = img_b64
+  #actual_data.at[i,'pd'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
+  actual_data.at[i,'pd'] = img_b64
 #code to insert correct or wrong symbol
 
   if(flag1==flag2):
@@ -335,7 +335,7 @@ for i in range(0,6):
   img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'overall_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
-  actual_data.at[i,'overall_direction'] = img_b64
+  actual_data.at[i,'od'] = img_b64
 # add 1 to each index
 actual_data.index = actual_data.index + 1
 
