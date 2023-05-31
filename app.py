@@ -260,6 +260,7 @@ for k in range(0,7):
 
 #Creating empty dataframe- actual_data
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
+st.write("pc -> prediction_close\tac->accuracy_close\tad->actual_direction\tpdf->prediction_direction\nod->overall_direction\tpo->prediction_open\tao->accuracy_open")
 actual_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
@@ -349,7 +350,7 @@ st.write(HTML(actual_data.head(5).to_html(escape=False)))
 
 
 
-future_data = pd.DataFrame(columns = ["Date","Open","prediction_open","accuracy_open","High","Low","Close","prediction_close","accuracy_close","actual_direction","prediction_direction","overall_direction","Adj Close","Volume"])
+future_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
 
 data2=actual_data.tail(1)
 future_data=pd.merge(data2,future_data,how='outer')
@@ -357,28 +358,28 @@ future_data=pd.merge(data2,future_data,how='outer')
 #future_data = future_data.append(actual_data.tail(1),ignore_index=True)
 
 #Accuracy for future data
-future_data.at[0,"accuracy_open"]=100-abs((actual_data.at[6,"prediction_open"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100)
-future_data.at[0,"accuracy_close"]=100-abs((actual_data.at[6,"prediction_close"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100)
+future_data.at[0,"ao"]=100-abs((actual_data.at[6,"po"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100)
+future_data.at[0,"ac"]=100-abs((actual_data.at[6,"pc"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100)
 
 
-future_data.at[1,"prediction_open"]=round(prediction_open0,2)
-future_data.at[1,"prediction_close"]=round(prediction_close0,2)#Prediction tomorrow's value
+future_data.at[1,"po"]=round(prediction_open0,2)
+future_data.at[1,"pc"]=round(prediction_close0,2)#Prediction tomorrow's value
 
-if(abs(future_data.at[1,"prediction_close"]-future_data.at[1,"prediction_open"])<=3 ):
+if(abs(future_data.at[1,"pc"]-future_data.at[1,"po"])<=3 ):
   img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     
-elif(future_data.at[1,"prediction_close"]-future_data.at[1,"prediction_open"]>=3):
+elif(future_data.at[1,"pc"]-future_data.at[1,"po"]>=3):
   img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     
-elif(future_data.at[1,"prediction_open"]-future_data.at[1,"prediction_close"]>=3):
+elif(future_data.at[1,"po"]-future_data.at[1,"pc"]>=3):
   img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     
   
   #img_b64 = base64.b64encode(img_bytes).decode('utf-8') 
 img_b64=img_path
 # Add the image data to the DataFrame
-  #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
-future_data.at[1,'prediction_direction'] = img_b64
+  #actual_data.at[i,'ad'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
+future_data.at[1,'pd'] = img_b64
 
 
 
