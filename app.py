@@ -313,13 +313,13 @@ for i in range(0,6):
 # Add the image data to the DataFrame
   #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
   actual_data.at[i,'ad'] = img_b64
-  if(abs(actual_data.at[i,'pclose']-actual_data.at[i,'po'])<=3):
+  if(abs(actual_data.at[i,'pclose']-actual_data.at[i,'popen'])<=3):
     img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     flag2=0
-  elif(actual_data.at[i,'pclose']-actual_data.at[i,'po']>=3):
+  elif(actual_data.at[i,'pclose']-actual_data.at[i,'popen']>=3):
     img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     flag2=1
-  elif(actual_data.at[i,'popen']-actual_data.at[i,'pc']>=3):
+  elif(actual_data.at[i,'popen']-actual_data.at[i,'pclose']>=3):
     img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     flag2=-1
   
