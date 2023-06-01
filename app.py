@@ -289,7 +289,7 @@ actual_data.at[5,"pc"]=round(prediction_close1,2)
 #to calculate accuracy for historical data
 for i in range(0,5):
   actual_data.at[i,"ao"]=round(100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
-  actual_data.at[i,"Volume"]=actual_data.at[i,"Volume"]/1000000
+  actual_data.at[i,"Volume"]=str(actual_data.at[i,"Volume"]/1000000)+"M"
 
 for i in range(0,5):
   actual_data.at[i,"ac"]=round(100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
@@ -367,6 +367,8 @@ future_data.at[0,"ac"]=round(100-abs((actual_data.at[6,"pc"]-actual_data.at[6,"C
 future_data.at[1,"po"]=round(prediction_open0,2)
 future_data.at[1,"pc"]=round(prediction_close0,2)#Prediction tomorrow's value
 
+#conversion of volume into millions
+future_data.at[0,"Volume"]=str(future_data.at[0,"Volume"]/1000000)+"M"
 if(abs(future_data.at[1,"pc"]-future_data.at[1,"po"])<=3 ):
   img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     
