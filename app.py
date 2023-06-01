@@ -262,37 +262,37 @@ for k in range(0,7):
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
 st.write("pc -> prediction_close   ac->accuracy_close    ad->actual_direction    pdf->prediction_direction    od->overall_direction    po->prediction_open    ao->accuracy_open")
 
-actual_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
+actual_data = pd.DataFrame(columns = ["Date","Open","popen","aopen","High","Low","Close","pclose","aclose","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
 actual_data=pd.merge(data1,actual_data,how='outer')
 #actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
 
-actual_data.at[0,"po"]=round(prediction_open6,2)
-actual_data.at[0,"pc"]=round(prediction_close6,2)
+actual_data.at[0,"popen"]=round(prediction_open6,2)
+actual_data.at[0,"pclose"]=round(prediction_close6,2)
 
-actual_data.at[1,"po"]=round(prediction_open5,2)
-actual_data.at[1,"pc"]=round(prediction_close5,2)
+actual_data.at[1,"popen"]=round(prediction_open5,2)
+actual_data.at[1,"pclose"]=round(prediction_close5,2)
 
-actual_data.at[2,"po"]=round(prediction_open4,2)
-actual_data.at[2,"pc"]=round(prediction_close4,2)
+actual_data.at[2,"popen"]=round(prediction_open4,2)
+actual_data.at[2,"pclose"]=round(prediction_close4,2)
 
-actual_data.at[3,"po"]=round(prediction_open3,2)
-actual_data.at[3,"pc"]=round(prediction_close3,2)
+actual_data.at[3,"popen"]=round(prediction_open3,2)
+actual_data.at[3,"pclose"]=round(prediction_close3,2)
 
-actual_data.at[4,"po"]=round(prediction_open2,2)
-actual_data.at[4,"pc"]=round(prediction_close2,2)
+actual_data.at[4,"popen"]=round(prediction_open2,2)
+actual_data.at[4,"pclose"]=round(prediction_close2,2)
 
-actual_data.at[5,"po"]=round(prediction_open1,2)
-actual_data.at[5,"pc"]=round(prediction_close1,2)
+actual_data.at[5,"popen"]=round(prediction_open1,2)
+actual_data.at[5,"pclose"]=round(prediction_close1,2)
 
 #to calculate accuracy for historical data
 for i in range(0,5):
-  actual_data.at[i,"ao"]=round(100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
+  actual_data.at[i,"aopen"]=round(100-abs((actual_data.at[i,"popen"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
   actual_data.at[i,"Volume"]=str(round(actual_data.at[i,"Volume"]/1000000,1))+"M"
 
 for i in range(0,5):
-  actual_data.at[i,"ac"]=round(100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
+  actual_data.at[i,"aclose"]=round(100-abs((actual_data.at[i,"pclose"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
 
 #to insert actual_direction,prediction_direction,overall_direction
 
@@ -313,13 +313,13 @@ for i in range(0,6):
 # Add the image data to the DataFrame
   #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
   actual_data.at[i,'ad'] = img_b64
-  if(abs(actual_data.at[i,'pc']-actual_data.at[i,'po'])<=3):
+  if(abs(actual_data.at[i,'pclose']-actual_data.at[i,'po'])<=3):
     img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     flag2=0
-  elif(actual_data.at[i,'pc']-actual_data.at[i,'po']>=3):
+  elif(actual_data.at[i,'pclose']-actual_data.at[i,'po']>=3):
     img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     flag2=1
-  elif(actual_data.at[i,'po']-actual_data.at[i,'pc']>=3):
+  elif(actual_data.at[i,'popen']-actual_data.at[i,'pc']>=3):
     img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     flag2=-1
   
