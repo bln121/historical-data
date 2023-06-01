@@ -262,37 +262,37 @@ for k in range(0,7):
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
 st.write("pc -> prediction_close   ac->accuracy_close    ad->actual_direction    pdf->prediction_direction    od->overall_direction    po->prediction_open    ao->accuracy_open")
 
-actual_data = pd.DataFrame(columns = ["Date","Open","popen","aopen","High","Low","Close","pclose","aclose","ad","pd","od","Adj Close","Volume"])
+actual_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
 actual_data=pd.merge(data1,actual_data,how='outer')
 #actual_data=actual_data.append(data.tail(6),ignore_index=True)  #inserting last five rows from data1 into actual_data
 
-actual_data.at[0,"popen"]=round(prediction_open6,2)
-actual_data.at[0,"pclose"]=round(prediction_close6,2)
+actual_data.at[0,"p_open"]=round(prediction_open6,2)
+actual_data.at[0,"p_close"]=round(prediction_close6,2)
 
-actual_data.at[1,"popen"]=round(prediction_open5,2)
-actual_data.at[1,"pclose"]=round(prediction_close5,2)
+actual_data.at[1,"p_open"]=round(prediction_open5,2)
+actual_data.at[1,"p_close"]=round(prediction_close5,2)
 
-actual_data.at[2,"popen"]=round(prediction_open4,2)
-actual_data.at[2,"pclose"]=round(prediction_close4,2)
+actual_data.at[2,"p_open"]=round(prediction_open4,2)
+actual_data.at[2,"p_close"]=round(prediction_close4,2)
 
-actual_data.at[3,"popen"]=round(prediction_open3,2)
-actual_data.at[3,"pclose"]=round(prediction_close3,2)
+actual_data.at[3,"p_open"]=round(prediction_open3,2)
+actual_data.at[3,"p_close"]=round(prediction_close3,2)
 
-actual_data.at[4,"popen"]=round(prediction_open2,2)
-actual_data.at[4,"pclose"]=round(prediction_close2,2)
+actual_data.at[4,"p_open"]=round(prediction_open2,2)
+actual_data.at[4,"p_close"]=round(prediction_close2,2)
 
-actual_data.at[5,"popen"]=round(prediction_open1,2)
-actual_data.at[5,"pclose"]=round(prediction_close1,2)
+actual_data.at[5,"p_open"]=round(prediction_open1,2)
+actual_data.at[5,"p_close"]=round(prediction_close1,2)
 
 #to calculate accuracy for historical data
 for i in range(0,5):
-  actual_data.at[i,"aopen"]=round(100-abs((actual_data.at[i,"popen"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
+  actual_data.at[i,"a_open"]=round(100-abs((actual_data.at[i,"p_open"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
   actual_data.at[i,"Volume"]=str(round(actual_data.at[i,"Volume"]/1000000,1))+"M"
 
 for i in range(0,5):
-  actual_data.at[i,"aclose"]=round(100-abs((actual_data.at[i,"pclose"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
+  actual_data.at[i,"a_close"]=round(100-abs((actual_data.at[i,"p_close"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
 
 #to insert actual_direction,prediction_direction,overall_direction
 
@@ -313,13 +313,13 @@ for i in range(0,6):
 # Add the image data to the DataFrame
   #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
   actual_data.at[i,'ad'] = img_b64
-  if(abs(actual_data.at[i,'pclose']-actual_data.at[i,'popen'])<=3):
+  if(abs(actual_data.at[i,'p_close']-actual_data.at[i,'p_open'])<=3):
     img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     flag2=0
-  elif(actual_data.at[i,'pclose']-actual_data.at[i,'popen']>=3):
+  elif(actual_data.at[i,'p_close']-actual_data.at[i,'p_open']>=3):
     img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     flag2=1
-  elif(actual_data.at[i,'popen']-actual_data.at[i,'pclose']>=3):
+  elif(actual_data.at[i,'p_open']-actual_data.at[i,'p_close']>=3):
     img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     flag2=-1
   
@@ -352,7 +352,7 @@ st.write(HTML(actual_data.head(5).to_html(escape=False)))
 
 
 
-future_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
+future_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","ad","pd","od","Adj Close","Volume"])
 
 data2=actual_data.tail(1)
 future_data=pd.merge(data2,future_data,how='outer')
@@ -360,19 +360,19 @@ future_data=pd.merge(data2,future_data,how='outer')
 #future_data = future_data.append(actual_data.tail(1),ignore_index=True)
 
 #Accuracy for future data
-future_data.at[0,"ao"]=round(100-abs((actual_data.at[6,"po"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100),2)
-future_data.at[0,"ac"]=round(100-abs((actual_data.at[6,"pc"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100),2)
+future_data.at[0,"a_open"]=round(100-abs((actual_data.at[6,"p_open"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100),2)
+future_data.at[0,"a_close"]=round(100-abs((actual_data.at[6,"p_close"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100),2)
 
 
-future_data.at[1,"po"]=round(prediction_open0,2)
-future_data.at[1,"pc"]=round(prediction_close0,2)#Prediction tomorrow's value
+future_data.at[1,"p_open"]=round(prediction_open0,2)
+future_data.at[1,"p_close"]=round(prediction_close0,2)#Prediction tomorrow's value
 
 #conversion of volume into millions
 future_data.at[0,"Volume"]=str(round(future_data.at[0,"Volume"]/1000000,1))+"M"
-if(abs(future_data.at[1,"pc"]-future_data.at[1,"po"])<=3 ):
+if(abs(future_data.at[1,"p_close"]-future_data.at[1,"p_open"])<=3 ):
   img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     
-elif(future_data.at[1,"pc"]-future_data.at[1,"po"]>=3):
+elif(future_data.at[1,"p_close"]-future_data.at[1,"p_open"]>=3):
   img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     
 elif(future_data.at[1,"po"]-future_data.at[1,"pc"]>=3):
