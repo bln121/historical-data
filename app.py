@@ -375,7 +375,7 @@ if(abs(future_data.at[1,"p_close"]-future_data.at[1,"p_open"])<=3 ):
 elif(future_data.at[1,"p_close"]-future_data.at[1,"p_open"]>=3):
   img_path = '<img src="https://tse1.mm.bing.net/th?id=OIP.ll5RVXjFVxvkowc-FiCpPwHaJH&pid=Api&P=0&h=180" alt="Up" width="20" height="20">'
     
-elif(future_data.at[1,"po"]-future_data.at[1,"pc"]>=3):
+elif(future_data.at[1,"p_open"]-future_data.at[1,"p_close"]>=3):
   img_path='<img src="https://www.freeiconspng.com/uploads/red-arrow-png-26.png" alt="Down" width="20" height="20">'
     
   
