@@ -76,8 +76,8 @@ def plot_raw_data():
 
 plot_raw_data()
 
-#Forecasting
 df_train =data[['Date','Close']]
+#Forecasting
 df_train= df_train.rename(columns={"Date":"ds", "Close": "y"})
 
 m = Prophet()
@@ -260,7 +260,7 @@ for k in range(0,7):
 
 #Creating empty dataframe- actual_data
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
-st.write("pc -> prediction_close\tac->accuracy_close\tad->actual_direction\tpdf->prediction_direction\nod->overall_direction\tpo->prediction_open\tao->accuracy_open")
+st.write("pc -> prediction_close   ac->accuracy_close    ad->actual_direction    pdf->prediction_direction    od->overall_direction    po->prediction_open    ao->accuracy_open")
 actual_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
@@ -287,10 +287,10 @@ actual_data.at[5,"pc"]=round(prediction_close1,2)
 
 #to calculate accuracy for historical data
 for i in range(0,5):
-  actual_data.at[i,"ao"]=100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100)
+  actual_data.at[i,"ao"]=round(100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
 
 for i in range(0,5):
-  actual_data.at[i,"ac"]=100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100)
+  actual_data.at[i,"ac"]=round(100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
 
 #to insert actual_direction,prediction_direction,overall_direction
 
@@ -358,8 +358,8 @@ future_data=pd.merge(data2,future_data,how='outer')
 #future_data = future_data.append(actual_data.tail(1),ignore_index=True)
 
 #Accuracy for future data
-future_data.at[0,"ao"]=100-abs((actual_data.at[6,"po"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100)
-future_data.at[0,"ac"]=100-abs((actual_data.at[6,"pc"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100)
+future_data.at[0,"ao"]=round(100-abs((actual_data.at[6,"po"]-actual_data.at[6,"Open"])/actual_data.at[6,"Open"]*100),2)
+future_data.at[0,"ac"]=round(100-abs((actual_data.at[6,"pc"]-actual_data.at[6,"Close"])/actual_data.at[6,"Close"]*100),2)
 
 
 future_data.at[1,"po"]=round(prediction_open0,2)
