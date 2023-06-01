@@ -261,6 +261,7 @@ for k in range(0,7):
 #Creating empty dataframe- actual_data
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
 st.write("pc -> prediction_close   ac->accuracy_close    ad->actual_direction    pdf->prediction_direction    od->overall_direction    po->prediction_open    ao->accuracy_open")
+
 actual_data = pd.DataFrame(columns = ["Date","Open","po","ao","High","Low","Close","pc","ac","ad","pd","od","Adj Close","Volume"])
 
 data1=data.tail(6)
@@ -288,7 +289,7 @@ actual_data.at[5,"pc"]=round(prediction_close1,2)
 #to calculate accuracy for historical data
 for i in range(0,5):
   actual_data.at[i,"ao"]=round(100-abs((actual_data.at[i,"po"]-actual_data.at[i,"Open"])/actual_data.at[i,"Open"]*100),2)
-  actual_data.at[i,"volume"]=actual_data.at[i,"volume"]/1000000
+  actual_data.at[i,"Volume"]=actual_data.at[i,"Volume"]/1000000
 
 for i in range(0,5):
   actual_data.at[i,"ac"]=round(100-abs((actual_data.at[i,"pc"]-actual_data.at[i,"Close"])/actual_data.at[i,"Close"]*100),2)
