@@ -262,7 +262,7 @@ for k in range(0,7):
 #pc-prediction close acc- accuracy close ad - actual_direction  pd - prediction_direction od-overall_direction po - prediction_open ao-accuracy_open
 st.write("pc -> prediction_close   ac->accuracy_close    ad->actual_direction    pdf->prediction_direction    od->overall_direction    po->prediction_open    ao->accuracy_open")
 
-actual_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","ad","pd","od","Adj Close","Volume"])
+actual_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","a_dir","p_dir","o_dir","Adj Close","Volume"])
 
 data1=data.tail(6)
 actual_data=pd.merge(data1,actual_data,how='outer')
@@ -312,7 +312,7 @@ for i in range(0,6):
   img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'actual_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
-  actual_data.at[i,'ad'] = img_b64
+  actual_data.at[i,'a_dir'] = img_b64
   if(abs(actual_data.at[i,'p_close']-actual_data.at[i,'p_open'])<=3):
     img_path='<img src="https://tse2.mm.bing.net/th?id=OIP.ddhO9ual65nyztsl1oxyVAFRC5&pid=Api&P=0&h=180" alt="Flat" width="20" height="20">'
     flag2=0
@@ -327,7 +327,7 @@ for i in range(0,6):
   img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'pd'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
-  actual_data.at[i,'pd'] = img_b64
+  actual_data.at[i,'p_dir'] = img_b64
 #code to insert correct or wrong symbol
 
   if(flag1==flag2):
@@ -338,7 +338,7 @@ for i in range(0,6):
   img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'overall_direction'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:20%; ">'
-  actual_data.at[i,'od'] = img_b64
+  actual_data.at[i,'o_dir'] = img_b64
 # add 1 to each index
 actual_data.index = actual_data.index + 1
 
@@ -352,7 +352,7 @@ st.write(HTML(actual_data.head(5).to_html(escape=False)))
 
 
 
-future_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","ad","pd","od","Adj Close","Volume"])
+future_data = pd.DataFrame(columns = ["Date","Open","p_open","a_open","High","Low","Close","p_close","a_close","a_dir","p_dir","o_dir","Adj Close","Volume"])
 
 data2=actual_data.tail(1)
 future_data=pd.merge(data2,future_data,how='outer')
@@ -383,7 +383,7 @@ elif(future_data.at[1,"p_open"]-future_data.at[1,"p_close"]>=3):
 img_b64=img_path
 # Add the image data to the DataFrame
   #actual_data.at[i,'ad'] = '<img src="data:image/jpeg;base64,' + img_b64 + '" style="width:50%;height:40%; ">'
-future_data.at[1,'pd'] = img_b64
+future_data.at[1,'p_dir'] = img_b64
 
 
 
